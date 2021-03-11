@@ -138,44 +138,6 @@ console.log("Количество книг после выдачи: " + library.
 
 //Задача3  Школьный журнал 
 
-function getAverageMark(marks) {
-    let quantity = marks.length;
-    let count = 0;
-    let average;
-    
-    if (quantity === 0) {
-        average = 0;
-        return average;
-    }
-   
-    for (let mark of marks) {
-        count = count + mark;
-    }
-    average = count / quantity;
-    let roundedAverage = Math.round(average);
-    return roundedAverage;   
-}
-
-function getAverageScore(data = {}) {
-    let countSubjects = 0;
-    let quantitySubjects = 0;
-    let result = {};
-    
-    for (let prop in data) {
-        
-        let averageSubject = getAverageMark(data[prop]);
-        quantitySubjects++;
-        countSubjects = countSubjects + averageSubject;
-        result[prop] = averageSubject;
-    }
-
-    if (quantitySubjects !== 0) {
-        result["average"] = Math.round(countSubjects / quantitySubjects);
-    }  
-    else  result["average"] = 0;
-    return result;
-}
-
 class StudentLog {
 	constructor(name) {
 		this.name = name;
