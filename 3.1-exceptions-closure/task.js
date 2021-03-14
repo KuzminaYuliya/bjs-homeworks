@@ -20,12 +20,11 @@ function validateCount(data) {
 //задача 2 Треугольник
 
 function getTriangle(a, b, c) {
-    const emptyTriangle = new Triangle(0, 0, 0);
     try {
         return new Triangle(a, b, c);
     }
     catch(error) {
-       return emptyTriangle;
+       return new EmptyObject;
     }
 }
 
@@ -43,21 +42,24 @@ class Triangle {
     }
     
     getPerimeter() {
-        if ((this.a === 0) && (this.b === 0) && (this.c === 0)) {
-            return ("Ошибка! Треугольник не существует");
-        }
-        else return (this.a + this.b + this.c);
+        return (this.a + this.b + this.c);
     } 
         
     getArea() {
-        if ((this.a === 0) && (this.b === 0) && (this.c === 0)) {
-            return ("Ошибка! Треугольник не существует");
-        }
-        else {
-            const halfPerimetr = this.getPerimeter() / 2;
-            const result = (halfPerimetr - this.a) * (halfPerimetr - this.b) * (halfPerimetr - this.c) * halfPerimetr;
-            return (+Math.sqrt(result).toFixed(3));
+        const halfPerimetr = this.getPerimeter() / 2;
+        const result = (halfPerimetr - this.a) * (halfPerimetr - this.b) * (halfPerimetr - this.c) * halfPerimetr;
+        return (+Math.sqrt(result).toFixed(3));
         }
     } 
+
+class   EmptyObject extends Triangle {
+	
+	getPerimeter() {
+        return ("Ошибка! Треугольник не существует");
+        }
+     
+    getArea() {
+       return ("Ошибка! Треугольник не существует");
+        }
 }
 
