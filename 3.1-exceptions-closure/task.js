@@ -24,7 +24,10 @@ function getTriangle(a, b, c) {
         return new Triangle(a, b, c);
     }
     catch(error) {
-       return new EmptyObject;
+       	return {
+	       	getPerimeter: () => "Ошибка! Треугольник не существует",
+			getArea: () => "Ошибка! Треугольник не существует",
+		}
     }
 }
 
@@ -51,15 +54,4 @@ class Triangle {
         return (+Math.sqrt(result).toFixed(3));
         }
     } 
-
-class   EmptyObject extends Triangle {
-	
-	getPerimeter() {
-        return ("Ошибка! Треугольник не существует");
-        }
-     
-    getArea() {
-       return ("Ошибка! Треугольник не существует");
-        }
-}
 
