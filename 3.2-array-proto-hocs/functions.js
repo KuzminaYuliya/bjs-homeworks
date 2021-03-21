@@ -16,14 +16,11 @@ function hasReliableWeapons (durability) {
 }
 
 function getReliableWeaponsNames (durability) {
-	const weaponsFilter = weapons.filter(item => item.durability > durability);
-	return weaponsFilter.map(item => item.name);
+	return weapons.filter(item => item.durability > durability).map(item => item.name);
 }
  
 function getTotalDamage () {
-	return weapons.reduce((sum, item) => {
-    	return (sum + item.attack);
- 	}, 0);
+	return weapons.reduce((sum, item) => (sum + item.attack),0);
 }
 
 // ++ для проверки необязательной функции 
@@ -32,17 +29,20 @@ const number = 10;
 // -- для проверки необязательной функции 
 
 function getValuestCountToSumValues (data, number) {
-	let sum = 0;
-	let arraySum = data.map(function(data) {
-		return (sum = sum + data)});
-	const check = arraySum.findIndex(item => item >= number);
-	if (check >= 0) { 
-		return (check + 1);
-	}
-	else return	(arraySum.length);
+	let n = 0;
+	let result = data.reduce(function(sum, element) {
+		if (sum >= number) {
+			return sum;
+		}
+		else {
+			n = n + 1;
+			return sum + element;
+		}
+},0)
+	return n;
 }
 
-
+	console.log(getValuestCountToSumValues (data, number));
 // Задача 2 Ускорение долгих вычислений
 
 function sleep(milliseconds) 
@@ -60,25 +60,18 @@ function sum(...args) {
 }
 
 function compareArrays(arr1, arr2) {
-    return (arr1.every(function(item) {
-     	return item === arr2[arr1.indexOf(item)];
- 	}) && arr1.length === arr2.length);  
+    return (arr1.length === arr2.length && arr1.every(function(item, index) {return item === arr2[index]}));
 }
 
 //++ для проверки сравнения массивов 
 
-//compareArrays([8, 9], [6]); // false, разные значения
-//compareArrays([8, 9, 5, 4], [8, 9, 5, 4, 8, 3, 5]); // false, разные значения
-//compareArrays([9, 2, 4, 8, 2], [9, 2, 4]); // false, разные значения
-//compareArrays([1, 2, 3], [2, 3, 1]); // false, разные индексы, хотя и одинаковые значения
-//compareArrays([8, 1, 2], [8, 1, 2]); // true
-
+console.log(compareArrays([8, 9], [6])); // false, разные значения
+console.log(compareArrays([8, 9, 5, 4], [8, 9, 5, 4, 8, 3, 5])); // false, разные значения
+console.log(compareArrays([9, 2, 4, 8, 2], [9, 2, 4])); // false, разные значения
+console.log(compareArrays([1, 2, 3], [2, 3, 1])); // false, разные индексы, хотя и одинаковые значения
+console.log(compareArrays([8, 1, 2], [8, 1, 2])); // true
+console.log(compareArrays([1, 2, 3, 1, 2], [1, 2, 3, 3, 3])); // false
 //-- для проверки сравнения массивов
-
-let memory = [{
-	args:  [],
-	result: 0
-}];
 
 //++ для проверки оптимизации
 
@@ -88,27 +81,25 @@ let memory = [{
 //-- для проверки
 
 function memorize(fn, limit) {
-	return function() {
-		
-		const args = Array.from(arguments);
-		const findArr = memory.find(item => compareArrays(args, item.args));
+	let memory = [];
+	return function(...rest) {
+		const findArr = memory.find(item => compareArrays(rest, item.args));
 		let result = 0;
 
-		if (findArr === undefined) {
-			result = fn.apply(null,Array.from(arguments));
-			memory.push({args: args, result: result});
-			if (memory.length > limit) {
-				memory.shift();
-			}
-			return result;	
-		}
-		else {
+		if (findArr) {
 			console.log("Выведено из памяти");
 			return findArr.result;
 		}
+
+		result = fn.apply(null,rest);
+		memory.push({args: rest, result});
+		if (memory.length > limit) {
+			memory.shift();
+		}
+			return result;
 	}
 }
-
+// ++ для проверки
 const resultFunction = memorize(sum, 5);
 console.log(resultFunction(1,2));
 console.log(resultFunction(3,4)); 
@@ -120,3 +111,4 @@ console.log(resultFunction(10,12));
 console.log(resultFunction(14,12));
 console.log(resultFunction(17,12));
 console.log(resultFunction(1,2));
+// -- для проверки
