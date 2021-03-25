@@ -41,15 +41,11 @@ class AlarmClock {
     }
 
     start() {
-        
-        function checkClock(call) {
-            if (call.time === getCurrentFormattedTime) {
-                call.callback();
-            }
-        } 
-            
+         
+        const checkClock = () => (this.time === this.getCurrentFormattedTime()) ? this.callback() : undefined; 
+      
         if (this.timerId === null) {
-                this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock),2000);
+                this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock()),2000);
         }
     }
 
