@@ -42,10 +42,10 @@ class AlarmClock {
 
     start() {
          
-        const checkClock = () => (this.time === this.getCurrentFormattedTime()) ? this.callback() : undefined; 
+        const checkClock = (call) => (call.time === this.getCurrentFormattedTime()) ? call.callback() : undefined;
       
         if (this.timerId === null) {
-                this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock()),2000);
+                this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock(call)),2000);
         }
     }
 
