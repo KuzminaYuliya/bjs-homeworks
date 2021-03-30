@@ -45,7 +45,7 @@ class AlarmClock {
         const checkClock = (call) => (call.time === this.getCurrentFormattedTime()) ? call.callback() : undefined;
       
         if (this.timerId === null) {
-                this.timerId = setInterval(() => this.alarmCollection.forEach(checkClock(call)),2000);
+                this.timerId = setInterval(() => this.alarmCollection.forEach(call => checkClock(call)),2000);
         }
     }
 
